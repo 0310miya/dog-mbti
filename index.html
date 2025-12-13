@@ -85,202 +85,489 @@ const questions = [
 ["安心できる場所を優先","H","E"]
 ];
 
-const results = {
-"SAIE":`
-<h2>SAIE｜冒険家タイプ</h2>
-<div class="section-title">性格</div>
-・刺激大好きの行動派<br>・初対面でも即行動<br>・探索優先
-<div class="section-title">強み</div>
-・環境適応力が高い<br>・メンタルが強い
-<div class="section-title">注意点</div>
-・興奮しやすい<br>・事故注意
-<div class="section-title">トリミング傾向</div>
-・動きやすいが慣れると協力的
-`,
+let index = 0;
 
-"SAIH":`
-<h2>SAIH｜社交的だけど慎重なリーダー</h2>
-<div class="section-title">性格</div>
-・フレンドリーだが慎重
-<div class="section-title">強み</div>
-・バランス型で安定
-<div class="section-title">注意点</div>
-・刺激が強すぎると疲れる
-<div class="section-title">トリミング傾向</div>
-・協力度高く安全
-`,
 
-"SABE":`
-<h2>SABE｜ハイテンション甘えん坊</h2>
-<div class="section-title">性格</div>
-・甘えん坊で興奮しやすい
-<div class="section-title">強み</div>
-・人への親和性が高い
-<div class="section-title">注意点</div>
-・分離不安注意
-<div class="section-title">トリミング傾向</div>
-・保定で安心
-`,
 
-"SABH":`
-<h2>SABH｜甘えん坊で明るい慎重派</h2>
-<div class="section-title">性格</div>
-・人好きだが慎重
-<div class="section-title">強み</div>
-・協調性が高い
-<div class="section-title">注意点</div>
-・慣れるまで時間
-<div class="section-title">トリミング傾向</div>
-・声かけ重要
-`,
 
-"SOIE":`
-<h2>SOIE｜のんびり探索家</h2>
-<div class="section-title">性格</div>
-・穏やか＋探求心
-<div class="section-title">強み</div>
-・冷静で安定
-<div class="section-title">注意点</div>
-・反応遅め
-<div class="section-title">トリミング傾向</div>
-・とても扱いやすい
-`,
+const resultData = {
 
-"SOIH":`
-<h2>SOIH｜超安定の穏やか自立タイプ</h2>
-<div class="section-title">性格</div>
-・温厚で安心重視
-<div class="section-title">強み</div>
-・ストレス耐性高い
-<div class="section-title">注意点</div>
-・慣らし必須
-<div class="section-title">トリミング傾向</div>
-・最強クラス
-`,
+  
+  SAIE: {
+    name: "冒険家タイプ",
+    code: "SAIE",
+    description: {
+      personality: [
+        "とにかく刺激大好きの行動派",
+        "初めての犬にもすぐ行く",
+        "飼い主に頼らずどんどん探索",
+        "トレーニングより探検優先"
+      ],
+      strengths: [
+        "環境適応力が高い",
+        "メンタルが強い",
+        "好奇心旺盛で学習が早い"
+      ],
+      cautions: [
+        "興奮しやすい",
+        "事故に注意（突っ込み型）"
+      ],
+      grooming: [
+        "ブロー中に動きやすい",
+        "刺激が欲しくて周りを見たがる",
+        "慣れれば協力的"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIH", "COIE", "SAIH"],
+      humans: ["行動力のある人", "安全管理ができる人"]
+    }
+  },
 
-"SOBE":`
-<h2>SOBE｜穏やか甘えん坊探検家</h2>
-<div class="section-title">性格</div>
-・甘えん坊＋好奇心
-<div class="section-title">強み</div>
-・学習が早い
-<div class="section-title">注意点</div>
-・寂しがり
-<div class="section-title">トリミング傾向</div>
-・優しい声かけ◎
-`,
+  
+  SAIH: {
+    name: "社交的だけど慎重なリーダー",
+    code: "SAIH",
+    description: {
+      personality: [
+        "犬にも人にもフレンドリー",
+        "環境変化はゆっくり確認",
+        "自立心があるが冷静"
+      ],
+      strengths: [
+        "バランスが良い",
+        "相手の空気を読む",
+        "安定して落ち着きやすい"
+      ],
+      cautions: [
+        "刺激が強い場所は軽いストレス"
+      ],
+      grooming: [
+        "協力度が高い",
+        "初見の人には少し様子見",
+        "唸りや咬みは出にくい"
+      ]
+    },
+    compatibility: {
+      dogs: ["COIH", "SOIH", "SAIE"],
+      humans: ["落ち着いたリーダータイプ", "観察力のある人"]
+    }
+  },
 
-"SOBH":`
-<h2>SOBH｜甘えん坊ゆっくりタイプ</h2>
-<div class="section-title">性格</div>
-・超おっとり
-<div class="section-title">強み</div>
-・信頼が厚い
-<div class="section-title">注意点</div>
-・刺激に弱い
-<div class="section-title">トリミング傾向</div>
-・ゆっくり作業
-`,
+  
+  SABE: {
+    name: "ハイテンション甘えん坊",
+    code: "SABE",
+    description: {
+      personality: [
+        "甘えん坊でテンション高い",
+        "人が大好き",
+        "興奮しやすく落ち着きにくい"
+      ],
+      strengths: [
+        "人への親和性が高い",
+        "扱いやすい",
+        "褒めると伸びる"
+      ],
+      cautions: [
+        "分離不安になりやすい",
+        "興奮吠え・飛びつき注意"
+      ],
+      grooming: [
+        "人に寄りかかりがち",
+        "じっとするのが苦手",
+        "保定の安心感が大事"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIE", "COIE", "SOBH"],
+      humans: ["ポジティブな人", "たくさん褒める人"]
+    }
+  },
 
-"CAIE":`
-<h2>CAIE｜慎重だけど行動派</h2>
-<div class="section-title">性格</div>
-・慣れると活発
-<div class="section-title">強み</div>
-・切り替え力高い
-<div class="section-title">注意点</div>
-・慣れるまで動かない
-<div class="section-title">トリミング傾向</div>
-・導入時間が重要
-`,
+  
+  SABH: {
+    name: "甘えん坊で明るい慎重派",
+    code: "SABH",
+    description: {
+      personality: [
+        "人が好きだが慎重",
+        "新しい物にはゆっくり接近",
+        "飼い主依存強め"
+      ],
+      strengths: [
+        "協調性がある",
+        "穏やか",
+        "安心すると行動が出る"
+      ],
+      cautions: [
+        "慣れるまで時間が必要",
+        "離れると不安が出やすい"
+      ],
+      grooming: [
+        "最初は固まりやすい",
+        "慣れたら甘える",
+        "声かけで安心度UP"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIH", "COBH", "CABE"],
+      humans: ["安心感を出せる人", "ゆっくり対応できる人"]
+    }
+  },
 
-"CAIH":`
-<h2>CAIH｜慎重×自立のハンター</h2>
-<div class="section-title">性格</div>
-・観察型
-<div class="section-title">強み</div>
-・判断力◎
-<div class="section-title">注意点</div>
-・緊張が長い
-<div class="section-title">トリミング傾向</div>
-・接触は慎重に
-`,
+  
+  SOIE: {
+    name: "のんびり探索家",
+    code: "SOIE",
+    description: {
+      personality: [
+        "穏やかだが探求心あり",
+        "動きはゆっくり",
+        "自分のペースを大切にする"
+      ],
+      strengths: [
+        "冷静",
+        "落ち着きがある",
+        "安定した探索行動"
+      ],
+      cautions: [
+        "テンポの速い場が苦手",
+        "反応は遅め"
+      ],
+      grooming: [
+        "とても扱いやすい",
+        "音には注意",
+        "ペース合わせが◎"
+      ]
+    },
+    compatibility: {
+      dogs: ["SABE", "CAIH", "COIE"],
+      humans: ["穏やかな人", "急かさない人"]
+    }
+  },
 
-"CABE":`
-<h2>CABE｜慎重だけど好奇心のある甘えん坊</h2>
-<div class="section-title">性格</div>
-・怖がり＋甘え
-<div class="section-title">強み</div>
-・絆が深い
-<div class="section-title">注意点</div>
-・慣れるまでストレス
-<div class="section-title">トリミング傾向</div>
-・保定で安心
-`,
+  
+  SOIH: {
+    name: "超安定の穏やか自立タイプ",
+    code: "SOIH",
+    description: {
+      personality: [
+        "温厚で落ち着きがある",
+        "刺激より安心重視",
+        "自立心が高い"
+      ],
+      strengths: [
+        "ストレスに強い",
+        "切り替えが上手",
+        "安定感抜群"
+      ],
+      cautions: [
+        "新しい場所では慣らしが必要"
+      ],
+      grooming: [
+        "超やりやすい",
+        "暴れない",
+        "環境が整えば◎"
+      ]
+    },
+    compatibility: {
+      dogs: ["SAIE", "CABH", "COIH"],
+      humans: ["冷静な人", "環境づくりが上手な人"]
+    }
+  },
 
-"CABH":`
-<h2>CABH｜慎重で甘えん坊なビビりタイプ</h2>
-<div class="section-title">性格</div>
-・怖がり
-<div class="section-title">強み</div>
-・一途
-<div class="section-title">注意点</div>
-・恐怖反応
-<div class="section-title">トリミング傾向</div>
-・抱っこ必須
-`,
+ 
+  SOBE: {
+    name: "穏やか甘えん坊探検家",
+    code: "SOBE",
+    description: {
+      personality: [
+        "基本は穏やか",
+        "甘えん坊",
+        "興味があると探索"
+      ],
+      strengths: [
+        "学習が早い",
+        "人が好き",
+        "好奇心と安心のバランス"
+      ],
+      cautions: [
+        "寂しがりや",
+        "少し迷子気質"
+      ],
+      grooming: [
+        "甘えたい",
+        "優しい声かけが◎",
+        "刺激でキョロキョロ"
+      ]
+    },
+    compatibility: {
+      dogs: ["COBE", "SABE", "SOIE"],
+      humans: ["優しい人", "寄り添える人"]
+    }
+  },
 
-"COIE":`
-<h2>COIE｜静かで賢い観察者</h2>
-<div class="section-title">性格</div>
-・知的で冷静
-<div class="section-title">強み</div>
-・理解力高い
-<div class="section-title">注意点</div>
-・刺激疲れ
-<div class="section-title">トリミング傾向</div>
-・扱いやすさ最強
-`,
 
-"COIH":`
-<h2>COIH｜超慎重な平和主義者</h2>
-<div class="section-title">性格</div>
-・落ち着き重視
-<div class="section-title">強み</div>
-・問題行動少
-<div class="section-title">注意点</div>
-・馴化時間必要
-<div class="section-title">トリミング傾向</div>
-・丁寧に
-`,
+  SOBH: {
+    name: "甘えん坊ゆっくりタイプ",
+    code: "SOBH",
+    description: {
+      personality: [
+        "超おっとり",
+        "甘えん坊",
+        "新しいことに慎重"
+      ],
+      strengths: [
+        "人への信頼が厚い",
+        "落ち着きやすい",
+        "扱いやすい"
+      ],
+      cautions: [
+        "緊張しやすい",
+        "刺激に弱い"
+      ],
+      grooming: [
+        "保定が必要",
+        "優しくゆっくり作業"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOBE", "COBE", "SAIH"],
+      humans: ["穏やかな人", "ゆっくり作業できる人"]
+    }
+  },
 
-"COBE":`
-<h2>COBE｜控えめで優しい甘えん坊</h2>
-<div class="section-title">性格</div>
-・優しい
-<div class="section-title">強み</div>
-・従順
-<div class="section-title">注意点</div>
-・緊張が出やすい
-<div class="section-title">トリミング傾向</div>
-・声かけ重要
-`,
+  
+  CAIE: {
+    name: "慎重だけど行動派",
+    code: "CAIE",
+    description: {
+      personality: [
+        "最初は慎重",
+        "慣れたら急に活発＆探索型",
+        "自立心が強い"
+      ],
+      strengths: [
+        "学習が早い",
+        "切り替え力が高い",
+        "安定した観察力"
+      ],
+      cautions: [
+        "慣れるまで動かない",
+        "環境変化に弱い"
+      ],
+      grooming: [
+        "最初は固まる",
+        "慣れると動く",
+        "導入に時間を取ると◎"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIH", "SOBH", "COIH"],
+      humans: ["焦らず待てる人", "観察してから動ける人"]
+    }
+  },
 
-"COBH":`
-<h2>COBH｜超慎重・超甘えん坊タイプ</h2>
-<div class="section-title">性格</div>
-・守ってあげたい
-<div class="section-title">強み</div>
-・信頼が深い
-<div class="section-title">注意点</div>
-・刺激NG
-<div class="section-title">トリミング傾向</div>
-・スロー作業
-`
+  CAIH: {
+    name: "慎重×自立のハンター",
+    code: "CAIH",
+    description: {
+      personality: [
+        "慎重に観察して状況把握",
+        "自分で決めて行動",
+        "飼い主に依存しない"
+      ],
+      strengths: [
+        "状況判断が上手い",
+        "頭の回転が速い",
+        "確実な行動が得意"
+      ],
+      cautions: [
+        "急な変化に弱い",
+        "最初の緊張が長め"
+      ],
+      grooming: [
+        "接触は慎重に",
+        "慣れれば協力的"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIE", "SOBE", "COIE"],
+      humans: ["論理的で落ち着いた人", "一貫した対応ができる人"]
+    }
+  },
+
+  CABE: {
+    name: "慎重だけど好奇心のある甘えん坊",
+    code: "CABE",
+    description: {
+      personality: [
+        "慎重に近づく",
+        "甘えん坊",
+        "興味はあるけど怖がり"
+      ],
+      strengths: [
+        "人と強い絆を作る",
+        "安心すれば積極的になる"
+      ],
+      cautions: [
+        "慣れるまでストレスが出やすい"
+      ],
+      grooming: [
+        "保定で安心感を",
+        "慣れると素直で可愛い動き"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIE", "SOBH", "COBE"],
+      humans: ["寄り添い型の人", "安心感を与えられる人"]
+    }
+  },
+
+  CABH: {
+    name: "慎重で甘えん坊なビビりタイプ",
+    code: "CABH",
+    description: {
+      personality: [
+        "甘えたいけど怖がり",
+        "新しい環境が苦手",
+        "飼い主がいないと不安定"
+      ],
+      strengths: [
+        "信頼できる相手には一途",
+        "優しい性格"
+      ],
+      cautions: [
+        "恐怖反応が出やすい",
+        "無理させないこと"
+      ],
+      grooming: [
+        "最初の緊張が強い",
+        "抱っこや保定が必要"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOIH", "COIH", "COBH"],
+      humans: ["安心基地になれる人", "静かに対応できる人"]
+    }
+  },
+
+  COIE: {
+    name: "静かで賢い観察者",
+    code: "COIE",
+    description: {
+      personality: [
+        "おっとり×自立",
+        "慎重で知的",
+        "無駄な動きが少ない"
+      ],
+      strengths: [
+        "ストレスに左右されにくい",
+        "理解が早い",
+        "冷静沈着"
+      ],
+      cautions: [
+        "刺激が強い場所は疲れやすい"
+      ],
+      grooming: [
+        "ほぼ動かない",
+        "扱いやすさ最強クラス"
+      ]
+    },
+    compatibility: {
+      dogs: ["SABE", "CAIH", "SOIH"],
+      humans: ["プロ意識の高い人", "静かに信頼を築ける人"]
+    }
+  },
+
+  COIH: {
+    name: "超慎重な平和主義者",
+    code: "COIH",
+    description: {
+      personality: [
+        "とても落ち着いている",
+        "慎重で丁寧に世界を見る",
+        "静かな環境が好き"
+      ],
+      strengths: [
+        "問題行動が少ない",
+        "理解力が高い"
+      ],
+      cautions: [
+        "変化が苦手",
+        "馴化に時間が必要"
+      ],
+      grooming: [
+        "ゆっくり丁寧に",
+        "無理に急がないこと"
+      ]
+    },
+    compatibility: {
+      dogs: ["SAIH", "CAIE", "CABH"],
+      humans: ["丁寧で落ち着いた人", "環境管理ができる人"]
+    }
+  },
+
+  COBE: {
+    name: "控えめで優しい甘えん坊",
+    code: "COBE",
+    description: {
+      personality: [
+        "おっとりで人が好き",
+        "初めは慎重",
+        "慣れると深く甘える"
+      ],
+      strengths: [
+        "とても優しい",
+        "従順",
+        "扱いやすさ高い"
+      ],
+      cautions: [
+        "緊張が顔に出やすい"
+      ],
+      grooming: [
+        "緊張時は小さな動きが増える",
+        "声かけで安心感UP"
+      ]
+    },
+    compatibility: {
+      dogs: ["SOBE", "CABE", "SOBH"],
+      humans: ["優しく接せる人", "空気を読める人"]
+    }
+  },
+
+  COBH: {
+    name: "超慎重・超甘えん坊タイプ",
+    code: "COBH",
+    description: {
+      personality: [
+        "慎重・おっとり・甘えん坊",
+        "守ってあげたくなるタイプ",
+        "環境依存が強い"
+      ],
+      strengths: [
+        "一度慣れた人への信頼は深い",
+        "とても優しい"
+      ],
+      cautions: [
+        "恐怖反応が残りやすい",
+        "過剰な刺激はNG"
+      ],
+      grooming: [
+        "保定必須",
+        "声かけとスローな作業が成功の鍵"
+      ]
+    },
+    compatibility: {
+      dogs: ["SABH", "CABH", "SOIH"],
+      humans: ["守り型の人", "一定のルーティンを作れる人"]
+    }
+  }
 };
 
-let index=0;
-let score={S:0,C:0,A:0,O:0,I:0,B:0,E:0,H:0};
+const score = { S:0, C:0, A:0, O:0, I:0, B:0, E:0, H:0 };
+
 const quiz=document.getElementById("quiz");
 
 function showQuestion(){
@@ -300,19 +587,49 @@ function answer(c){
 }
 
 function showResult(){
-  const type=
-    (score.S>=score.C?"S":"C")+
-    (score.A>=score.O?"A":"O")+
-    (score.I>=score.B?"I":"B")+
-    (score.E>=score.H?"E":"H");
+  const type =
+    (score.S >= score.C ? "S" : "C") +
+    (score.A >= score.O ? "A" : "O") +
+    (score.I >= score.B ? "I" : "B") +
+    (score.E >= score.H ? "E" : "H");
+
+  const data = resultData[type];
+
   quiz.classList.add("hidden");
-  const r=document.getElementById("result");
+  const r = document.getElementById("result");
   r.classList.remove("hidden");
-  r.innerHTML=results[type];
+
+  r.innerHTML = `
+    <h2>${data.code}｜${data.name}</h2>
+<p style="text-align:center;font-weight:bold;">
+この子は「${data.name}」タイプです
+</p>
+
+ <div class="section-title">性格</div>
+    <ul>${data.description.personality.map(v=>`<li>${v}</li>`).join("")}</ul>
+
+    <div class="section-title">強み</div>
+    <ul>${data.description.strengths.map(v=>`<li>${v}</li>`).join("")}</ul>
+
+    <div class="section-title">注意点</div>
+    <ul>${data.description.cautions.map(v=>`<li>${v}</li>`).join("")}</ul>
+
+    <div class="section-title">トリミング傾向</div>
+    <ul>${data.description.grooming.map(v=>`<li>${v}</li>`).join("")}</ul>
+
+    <div class="section-title">相性の良い犬タイプ</div>
+    <p>${data.compatibility.dogs.join(" / ")}</p>
+
+    <div class="section-title">相性の良い人</div>
+    <p>${data.compatibility.humans.join(" / ")}</p>
+
+<button onclick="location.reload()"
+  style="margin-top:20px;background:#4CAF50;color:white;">
+もう一度診断する
+</button>
+
+  `;
 }
 
 showQuestion();
 </script>
-
-</body>
-</html>

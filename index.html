@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>犬の性格診断｜DOG MBTI</title>
+<style>
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
+  background:#fafafa;margin:0;
+}
+.container{max-width:720px;margin:auto;padding:20px;}
+h1,h2,h3{text-align:center;}
+.question{margin:20px 0;}
+button{
+  width:100%;padding:14px;margin:8px 0;
+  border:none;border-radius:10px;font-size:16px;
+}
+.yes{background:#4CAF50;color:#fff;}
+.no{background:#e0e0e0;}
+.hidden{display:none;}
+.result{
+  background:#fff;padding:20px;border-radius:16px;
+}
+.section-title{font-weight:bold;margin-top:14px;}
+.logo{text-align:center;font-weight:bold;margin-bottom:10px;}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div class="logo">🐾 DOG PERSONALITY CHECK</div>
+<h1>犬の性格診断</h1>
+
+<div id="quiz"></div>
+<div id="result" class="hidden result"></div>
+
+</div>
+
+<script>
+const questions = [
+["初対面の犬にもわりと早く近づく","S","C"],
+["知らない場所ではまず様子を見る","C","S"],
+["急な音がしてもすぐ普段に戻る","S","C"],
+["初対面の人に触られると体を引く","C","S"],
+["他の犬に興味を示しやすい","S","C"],
+["人や犬が多いと慎重になる","C","S"],
+["新しい環境でも尻尾が下がりにくい","S","C"],
+["初めての場所では飼い主の後ろに隠れる","C","S"],
+["初対面でも匂いを嗅ぎに行く","S","C"],
+["慣れない相手とは距離を取る","C","S"],
+
+["散歩中止まるとすぐ動きたがる","A","O"],
+["家では寝ている時間が長い","O","A"],
+["おもちゃにすぐ反応する","A","O"],
+["刺激があっても落ち着いている","O","A"],
+["テンションが上がると止まらない","A","O"],
+["動きが全体的にゆっくり","O","A"],
+["遊びに誘うとすぐ乗る","A","O"],
+["休憩を好む","O","A"],
+["外ではエネルギッシュ","A","O"],
+["騒がしくてもマイペース","O","A"],
+
+["一人でも落ち着いていられる","I","B"],
+["不安なとき人に寄る","B","I"],
+["新しい場所でも自分で動く","I","B"],
+["飼い主が見えないと探す","B","I"],
+["一人遊びができる","I","B"],
+["家で後をついて回る","B","I"],
+["自分で判断して行動する","I","B"],
+["抱っこを強く求める","B","I"],
+["知らない環境でも動ける","I","B"],
+["安心のため触れたがる","B","I"],
+
+["新しい物をすぐ調べる","E","H"],
+["環境変化に慎重","H","E"],
+["物音がすると確認する","E","H"],
+["知らない場所では飼い主を見る","H","E"],
+["初めての道も進む","E","H"],
+["慣れたコースが好き","H","E"],
+["匂い嗅ぎが長い","E","H"],
+["変化があると止まりやすい","H","E"],
+["好奇心が行動に出る","E","H"],
+["安心できる場所を優先","H","E"]
+];
+
+const results = {
+"SAIE":`
+<h2>SAIE｜冒険家タイプ</h2>
+<div class="section-title">性格</div>
+・刺激大好きの行動派<br>・初対面でも即行動<br>・探索優先
+<div class="section-title">強み</div>
+・環境適応力が高い<br>・メンタルが強い
+<div class="section-title">注意点</div>
+・興奮しやすい<br>・事故注意
+<div class="section-title">トリミング傾向</div>
+・動きやすいが慣れると協力的
+`,
+
+"SAIH":`
+<h2>SAIH｜社交的だけど慎重なリーダー</h2>
+<div class="section-title">性格</div>
+・フレンドリーだが慎重
+<div class="section-title">強み</div>
+・バランス型で安定
+<div class="section-title">注意点</div>
+・刺激が強すぎると疲れる
+<div class="section-title">トリミング傾向</div>
+・協力度高く安全
+`,
+
+"SABE":`
+<h2>SABE｜ハイテンション甘えん坊</h2>
+<div class="section-title">性格</div>
+・甘えん坊で興奮しやすい
+<div class="section-title">強み</div>
+・人への親和性が高い
+<div class="section-title">注意点</div>
+・分離不安注意
+<div class="section-title">トリミング傾向</div>
+・保定で安心
+`,
+
+"SABH":`
+<h2>SABH｜甘えん坊で明るい慎重派</h2>
+<div class="section-title">性格</div>
+・人好きだが慎重
+<div class="section-title">強み</div>
+・協調性が高い
+<div class="section-title">注意点</div>
+・慣れるまで時間
+<div class="section-title">トリミング傾向</div>
+・声かけ重要
+`,
+
+"SOIE":`
+<h2>SOIE｜のんびり探索家</h2>
+<div class="section-title">性格</div>
+・穏やか＋探求心
+<div class="section-title">強み</div>
+・冷静で安定
+<div class="section-title">注意点</div>
+・反応遅め
+<div class="section-title">トリミング傾向</div>
+・とても扱いやすい
+`,
+
+"SOIH":`
+<h2>SOIH｜超安定の穏やか自立タイプ</h2>
+<div class="section-title">性格</div>
+・温厚で安心重視
+<div class="section-title">強み</div>
+・ストレス耐性高い
+<div class="section-title">注意点</div>
+・慣らし必須
+<div class="section-title">トリミング傾向</div>
+・最強クラス
+`,
+
+"SOBE":`
+<h2>SOBE｜穏やか甘えん坊探検家</h2>
+<div class="section-title">性格</div>
+・甘えん坊＋好奇心
+<div class="section-title">強み</div>
+・学習が早い
+<div class="section-title">注意点</div>
+・寂しがり
+<div class="section-title">トリミング傾向</div>
+・優しい声かけ◎
+`,
+
+"SOBH":`
+<h2>SOBH｜甘えん坊ゆっくりタイプ</h2>
+<div class="section-title">性格</div>
+・超おっとり
+<div class="section-title">強み</div>
+・信頼が厚い
+<div class="section-title">注意点</div>
+・刺激に弱い
+<div class="section-title">トリミング傾向</div>
+・ゆっくり作業
+`,
+
+"CAIE":`
+<h2>CAIE｜慎重だけど行動派</h2>
+<div class="section-title">性格</div>
+・慣れると活発
+<div class="section-title">強み</div>
+・切り替え力高い
+<div class="section-title">注意点</div>
+・慣れるまで動かない
+<div class="section-title">トリミング傾向</div>
+・導入時間が重要
+`,
+
+"CAIH":`
+<h2>CAIH｜慎重×自立のハンター</h2>
+<div class="section-title">性格</div>
+・観察型
+<div class="section-title">強み</div>
+・判断力◎
+<div class="section-title">注意点</div>
+・緊張が長い
+<div class="section-title">トリミング傾向</div>
+・接触は慎重に
+`,
+
+"CABE":`
+<h2>CABE｜慎重だけど好奇心のある甘えん坊</h2>
+<div class="section-title">性格</div>
+・怖がり＋甘え
+<div class="section-title">強み</div>
+・絆が深い
+<div class="section-title">注意点</div>
+・慣れるまでストレス
+<div class="section-title">トリミング傾向</div>
+・保定で安心
+`,
+
+"CABH":`
+<h2>CABH｜慎重で甘えん坊なビビりタイプ</h2>
+<div class="section-title">性格</div>
+・怖がり
+<div class="section-title">強み</div>
+・一途
+<div class="section-title">注意点</div>
+・恐怖反応
+<div class="section-title">トリミング傾向</div>
+・抱っこ必須
+`,
+
+"COIE":`
+<h2>COIE｜静かで賢い観察者</h2>
+<div class="section-title">性格</div>
+・知的で冷静
+<div class="section-title">強み</div>
+・理解力高い
+<div class="section-title">注意点</div>
+・刺激疲れ
+<div class="section-title">トリミング傾向</div>
+・扱いやすさ最強
+`,
+
+"COIH":`
+<h2>COIH｜超慎重な平和主義者</h2>
+<div class="section-title">性格</div>
+・落ち着き重視
+<div class="section-title">強み</div>
+・問題行動少
+<div class="section-title">注意点</div>
+・馴化時間必要
+<div class="section-title">トリミング傾向</div>
+・丁寧に
+`,
+
+"COBE":`
+<h2>COBE｜控えめで優しい甘えん坊</h2>
+<div class="section-title">性格</div>
+・優しい
+<div class="section-title">強み</div>
+・従順
+<div class="section-title">注意点</div>
+・緊張が出やすい
+<div class="section-title">トリミング傾向</div>
+・声かけ重要
+`,
+
+"COBH":`
+<h2>COBH｜超慎重・超甘えん坊タイプ</h2>
+<div class="section-title">性格</div>
+・守ってあげたい
+<div class="section-title">強み</div>
+・信頼が深い
+<div class="section-title">注意点</div>
+・刺激NG
+<div class="section-title">トリミング傾向</div>
+・スロー作業
+`
+};
+
+let index=0;
+let score={S:0,C:0,A:0,O:0,I:0,B:0,E:0,H:0};
+const quiz=document.getElementById("quiz");
+
+function showQuestion(){
+  if(index>=questions.length){showResult();return;}
+  quiz.innerHTML=`
+  <div class="question">
+    <h2>Q${index+1}</h2>
+    <p>${questions[index][0]}</p>
+    <button class="yes" onclick="answer(0)">あてはまる</button>
+    <button class="no" onclick="answer(1)">どちらかといえば違う</button>
+  </div>`;
+}
+
+function answer(c){
+  score[questions[index][c+1]]++;
+  index++; showQuestion();
+}
+
+function showResult(){
+  const type=
+    (score.S>=score.C?"S":"C")+
+    (score.A>=score.O?"A":"O")+
+    (score.I>=score.B?"I":"B")+
+    (score.E>=score.H?"E":"H");
+  quiz.classList.add("hidden");
+  const r=document.getElementById("result");
+  r.classList.remove("hidden");
+  r.innerHTML=results[type];
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>

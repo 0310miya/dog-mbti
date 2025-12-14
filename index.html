@@ -33,6 +33,15 @@ button{
 <div class="logo">🐾 DOG PERSONALITY CHECK</div>
 <h1>犬の性格診断</h1>
 
+<div id="start" class="result">
+  <h2>🐾 犬の性格診断</h2>
+  <p>
+    いくつかの質問に答えるだけで<br>
+    ワンちゃんの性格タイプがわかります。
+  </p>
+  <button class="yes" onclick="startQuiz()">診断スタート</button>
+</div>
+
 <div id="quiz"></div>
 <div id="result" class="hidden result"></div>
 
@@ -86,6 +95,8 @@ const questions = [
 ];
 
 let index = 0;
+
+const answers = [ ];
 
 
 
@@ -570,6 +581,11 @@ const score = { S:0, C:0, A:0, O:0, I:0, B:0, E:0, H:0 };
 
 const quiz=document.getElementById("quiz");
 
+function startQuiz(){
+  document.getElementById("start").classList.add("hidden");
+  showQuestion();
+}
+
 function showQuestion(){
   if(index>=questions.length){showResult();return;}
   quiz.innerHTML=`
@@ -578,13 +594,40 @@ function showQuestion(){
     <p>${questions[index][0]}</p>
     <button class="yes" onclick="answer(0)">あてはまる</button>
     <button class="no" onclick="answer(1)">どちらかといえば違う</button>
+
+${index > 0 ? `
+      <button onclick="goBack()"
+        style="margin-top:12px;background:#ccc;">
+        ← 前の質問に戻る
+      </button>` : ""}
+
   </div>`;
 }
 
 function answer(c){
-  score[questions[index][c+1]]++;
-  index++; showQuestion();
+  const trait = questions[index][c+1];
+  score[trait]++;
+  answers[index] = trait;
+  index++;
+  showQuestion();
 }
+
+
+function goBack(){
+  if(index <= 0) return;
+
+  index--;
+
+  const lastTrait = answers[index];
+  if(lastTrait){
+    score[lastTrait]--;
+  }
+
+  showQuestion();
+}
+
+
+
 
 function showResult(){
   const type =
@@ -618,7 +661,7 @@ function showResult(){
     <ul>${data.description.grooming.map(v=>`<li>${v}</li>`).join("")}</ul>
 
     <div class="section-title">相性の良い犬タイプ</div>
-    <p>${data.compatibility.dogs.join(" / ")}</p>
+    <p>${data.compatibility.dogs  .map(code => `${code}（${resultData[code].name}）`).join(" / ")}</p>
 
     <div class="section-title">相性の良い人</div>
     <p>${data.compatibility.humans.join(" / ")}</p>
@@ -631,5 +674,7 @@ function showResult(){
   `;
 }
 
-showQuestion();
+// showQuestion();
+
 </script>
+

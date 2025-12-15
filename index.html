@@ -47,6 +47,83 @@ button{
 
 </div>
 
+<div class="container">
+
+<!-- 性格一覧表ページ -->
+<div id="typeList" class="hidden">
+
+  <h2>🐾 性格一覧表 🐾</h2>
+
+  <h3 style="color:#e74c3c;">❤️ アクティブ探索型（Explorers）</h3>
+  <p><strong>刺激×行動派×外向き</strong></p>
+  <p>
+    SAIE｜冒険家タイプ<br>
+    SAIH｜社交的だけど慎重なリーダー<br>
+    SABE｜ハイテンション甘えん坊<br>
+    SABH｜甘えん坊で明るい慎重派
+  </p>
+  <p>
+    ・行動が早い<br>
+    ・環境に働きかける<br>
+    ・トリミング中も動きが出やすい
+  </p>
+  <p>💡 刺激があるとまず動く冒険犬</p>
+
+  <hr>
+
+  <h3 style="color:#27ae60;">💚 バランス安定型（Harmonizers）</h3>
+  <p><strong>穏やか×安心重視×適応力</strong></p>
+  <p>
+    SOIE｜のんびり探索家<br>
+    SOIH｜超安定の穏やか自立タイプ<br>
+    SOBE｜穏やか甘えん坊探検家<br>
+    SOBH｜甘えん坊ゆっくりタイプ
+  </p>
+  <p>
+    ・安定感がある<br>
+    ・空気を読む<br>
+    ・トリマー的に一番助かる
+  </p>
+  <p>💡 落ち着きと対応力をもつ安心犬</p>
+
+  <hr>
+
+  <h3 style="color:#2980b9;">💙 慎重リアクター型（Guardians）</h3>
+  <p><strong>慎重×緊張しやすい×観察重視</strong></p>
+  <p>
+    CAIE｜慎重だけど行動派<br>
+    CAIH｜慎重×自立のハンター<br>
+    CABE｜慎重だけど好奇心のある甘えん坊<br>
+    CABH｜慎重で甘えん坊なビビりタイプ
+  </p>
+  <p>
+    ・初動が遅い<br>
+    ・慣れが重要<br>
+    ・無理すると崩れやすい
+  </p>
+  <p>💡 信頼が行動のスイッチになる慎重犬</p>
+
+  <hr>
+
+  <h3 style="color:#8e44ad;">💜 超安定観察型（Observers）</h3>
+  <p><strong>低刺激×自立×静かな観察</strong></p>
+  <p>
+    COIE｜静かで賢い観察者<br>
+    COIH｜超慎重な平和主義者<br>
+    COBE｜控えめで優しい甘えん坊<br>
+    COBH｜超慎重・超甘えん坊タイプ
+  </p>
+  <p>
+    ・動きが少ない<br>
+    ・感情が内向き<br>
+    ・変化に弱い
+  </p>
+  <p>💡 静かな環境で力を発揮する観察犬</p>
+
+  <button onclick="backToResult()">結果に戻る</button>
+</div>
+
+
 <script>
 const questions = [
 ["初対面の犬にもわりと早く近づく","S","C"],
@@ -583,6 +660,9 @@ const quiz=document.getElementById("quiz");
 
 function startQuiz(){
   document.getElementById("start").classList.add("hidden");
+
+  document.getElementById("typeList").classList.add("hidden");
+
   showQuestion();
 }
 
@@ -669,12 +749,27 @@ function showResult(){
 <button onclick="location.reload()"
   style="margin-top:20px;background:#4CAF50;color:white;">
 もう一度診断する
-</buton>
+</button>
+
+<button onclick="showTypeList()">性格一覧表へ</button>
+
 
   `;
 }
 
 // showQuestion();
 
-</script>
+// 🔽 ③ 性格一覧表表示
+function showTypeList(){
+  document.getElementById("result").classList.add("hidden");
+    document.getElementById("quiz").classList.add("hidden"); document.getElementById("typeList").classList.remove("hidden");
+}
 
+// 🔽 一覧表 → 結果へ戻る
+function backToResult(){
+  document.getElementById("typeList").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+}
+
+
+</script>
